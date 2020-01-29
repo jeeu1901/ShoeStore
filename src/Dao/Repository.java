@@ -77,7 +77,8 @@ public class Repository {
 //    }
 
     public boolean addOrder(int shoeId, int orderId , int custId) {
-        boolean checkOrder =false;
+        int checkOrder;
+        boolean checker = true;
         try(CallableStatement stmt = con.prepareCall("CALL skodatabas.AddToCart(?, ?, ?)")) {
             stmt.setInt(1, custId);
             if(orderId == 0) {
@@ -87,11 +88,14 @@ public class Repository {
                 stmt.setInt(2, orderId);
             }
             stmt.setInt(3, shoeId);
-            checkOrder = stmt.execute();
+            checkOrder = stmt.executeUpdate();
+            if(checkOrder > 0) {
+                checker = false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return checkOrder;
+        return checker;
     }
 
     public Order getOrder(int custId) {
@@ -116,8 +120,25 @@ public class Repository {
         return order;
     }
 
-    public void getOrderItems(int orderId) {
+    public List<Shoes> getOrderItems(int custId) {
+        String query = "Select beställ_item.id, beställ_item.datum, beställ_item.antal, beställ_item.sko from skodatabas.beställ_item" +
+                " inner join skodatabas.beställning on beställ_item.beställning = beställning.id " +
+                " inner join skodatabas.kunder on beställning.kund = kunder.id" +
+                " where beställning = ? ;";
+        OrderItem orderItem = new OrderItem();
+        List<Shoes> orderShoes = new ArrayList<>();
+        try(PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, custId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                    Shoes shoes = getShoe(rs.getInt("sko"));
+                    orderShoes.add(shoes);
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderShoes;
     }
 
     // Tar alla skor från min vy "allShoes" i databasen

@@ -75,7 +75,7 @@ public class View {
                 }
                 if(controller.placeOrder(pickedShoe)) {
 
-                    System.out.println("Din beställning lyckades. Vill du beställa mer? (k) för kategori (q) för avsluta");
+                    System.out.println("Din beställning lyckades. Vill du beställa mer? (k) för kategori (q) för avsluta eller (s) för att skriva ut din lista");
                     String input = sc.next();
                     shoeCheck = true;
 
@@ -84,6 +84,10 @@ public class View {
                     }
                     else if(input.equalsIgnoreCase("q")) {
                         System.out.println("Avslutar!");
+                        System.exit(0);
+                    }
+                    else if(input.equalsIgnoreCase("s")) {
+                        controller.getList();
                         System.exit(0);
                     }
                 }

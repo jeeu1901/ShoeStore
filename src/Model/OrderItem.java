@@ -15,6 +15,10 @@ public class OrderItem {
         this.antal = antal;
     }
 
+    public OrderItem() {
+
+    }
+
     public int getId() {
         return id;
     }

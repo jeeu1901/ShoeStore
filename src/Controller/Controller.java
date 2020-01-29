@@ -62,13 +62,23 @@ public class Controller {
             orderNr = order.getId();
         }
 
-        if(rep.addOrder( shoesList.get(shoe-1).getId(), orderNr , customer.getId())) {
+        boolean checker = rep.addOrder( shoesList.get(shoe-1).getId(), orderNr , customer.getId());
+        if(checker) {
             return true;
         }
         else {
             return false;
         }
 
+    }
+
+    public void getList() {
+        double totalPrice = 0;
+        for(Shoes s: rep.getOrderItems(customer.getId())) {
+            totalPrice += s.getPrice().getPrice();
+            view.printString(s.printListShoes());
+        }
+        view.printString("Total pris: " + totalPrice);
     }
 
 

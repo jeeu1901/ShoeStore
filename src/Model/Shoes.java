@@ -49,4 +49,9 @@ public class Shoes {
         return ". Märke: " + getLabel().getName() + " Färg: " + getColor().getName() + " Storlek: " + getSize().getShoeSize() +
                 " Kostar: " + getPrice().getPrice() + " Lager antal: " + getAmount();
     }
+
+    public String printListShoes() {
+        return ". Märke: " + getLabel().getName() + " Färg: " + getColor().getName() + " Storlek: " + getSize().getShoeSize() +
+                " Kostar: " + getPrice().getPrice();
+    }
 }
