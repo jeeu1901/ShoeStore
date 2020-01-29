@@ -5,7 +5,9 @@ import util.ConDatabase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Repository {
@@ -34,6 +36,8 @@ public class Repository {
         String query = "select tillhör.sko from skodatabas.tillhör " +
                 "where tillhör.kategori = ? ;";
         Shoes shoes = new Shoes();
+        Map<Category, Shoes> shoeMap = new HashMap<>();
+
         try(PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, categoryId);
             ResultSet rs = stmt.executeQuery();

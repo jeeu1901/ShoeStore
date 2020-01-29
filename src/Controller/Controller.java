@@ -73,12 +73,14 @@ public class Controller {
     }
 
     public void getList() {
-        double totalPrice = 0;
-        for(Shoes s: rep.getOrderItems(customer.getId())) {
-            totalPrice += s.getPrice().getPrice();
-            view.printString(s.printListShoes());
-        }
-        view.printString("Total pris: " + totalPrice);
+        List<Shoes> orderShoesList = rep.getOrderItems(customer.getId());
+//        for(Shoes s: rep.getOrderItems(customer.getId())) {
+//            totalPrice += s.getPrice().getPrice();
+//            view.printString(s.printListShoes());
+//        }
+        orderShoesList.forEach(l-> view.printString(l.printListShoes()));
+
+
     }
 
 
